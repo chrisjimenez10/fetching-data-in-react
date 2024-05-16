@@ -3,6 +3,7 @@ import * as weatherService from "./services/weatherService.js";
 //Desctructure the object holding the functions as properties from the imported module
 import {useState} from "react";
 import WeatherSearch from "./components/WeatherSearch.jsx";
+import WeatherDetails from "./components/WeatherDetails.jsx";
 
 const {show} = weatherService;
 
@@ -31,13 +32,17 @@ const App = () => {
     <main>
       <h1>Weather API</h1>
       <WeatherSearch fetchData={fetchData}/>
-      <h2>Weather Details</h2>
+
+      {/* <h2>Weather Details</h2>
       <h4>Location: {weather.location}</h4>
       <h4>Region: {weather.region}</h4>
       <h4>Country: {weather.country}</h4>
       <h4>Condition: {weather.condition}</h4>
       <img src={weather.icon} />
-      <h4>Temperature: {weather.temperature} </h4>
+      <h4>Temperature: {weather.temperature} </h4> */}
+
+    <WeatherDetails weather={weather}/>
+
     </main>
   );
 }
