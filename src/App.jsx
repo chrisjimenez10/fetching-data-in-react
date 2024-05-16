@@ -2,6 +2,7 @@
 import * as weatherService from "./services/weatherService.js";
 //Desctructure the object holding the functions as properties from the imported module
 import {useState} from "react";
+import WeatherSearch from "./components/WeatherSearch.jsx";
 
 const {show} = weatherService;
 
@@ -9,36 +10,34 @@ const App = () => {
 
   //State
   const [weather, setWeather] = useState({});
-  const [city, setCity] = useState("");
+  // const [city, setCity] = useState("");
 
-  const fetchData = async () => {
+  const fetchData = async (city) => {
     //We can pass the state variable to the function that fetches data from the API, after connecting the input feature to send the "city name" the user types in the input field
     const data = await show(city);
     setWeather({
       location: data.location.name,
-      temperature: data.current.temp_f,
+      region: data.location.region,
+      country: data.location.country,
       condition: data.current.condition.text,
+      temperature: data.current.temp_f,
+      icon: data.current.condition.icon,
+
     })
-    // console.log(data)
-    
   };
- 
-  const handleInputChange = (event) => {
-    console.log(event.target.value)
-    setCity(event.target.value);
-  }
+
 
   return (
     <main>
       <h1>Weather API</h1>
-      <input type="text" onChange={handleInputChange}/>
-      <button onClick={fetchData}>Fetch Weather Data</button>
-      <section>
-        <h2>Weather Details</h2>
-        <p>Location: {weather.location}</p>
-        <p>temperature: {weather.temperature}</p>
-        <p>condition: {weather.condition}</p>
-      </section>
+      <WeatherSearch fetchData={fetchData}/>
+      <h2>Weather Details</h2>
+      <h4>Location: {weather.location}</h4>
+      <h4>Region: {weather.region}</h4>
+      <h4>Country: {weather.country}</h4>
+      <h4>Condition: {weather.condition}</h4>
+      <img src={weather.icon} />
+      <h4>Temperature: {weather.temperature} </h4>
     </main>
   );
 }
